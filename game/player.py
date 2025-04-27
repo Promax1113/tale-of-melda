@@ -28,7 +28,31 @@ class Player(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2()
         self.speed = 10
 
-    def move_and_collide(self, screen: pygame.Surface, controller: Controller):
+    def check_collisions(self, sprite_group: pygame.sprite.Group):
+        # Handle horizontal movement first
+        self.rect.x += self.velocity.x
+        collision = pygame.sprite.spritecollideany(self, sprite_group)
+        if collision:
+            if self.velocity.x > 0:
+                self.rect.right = collision.rect.left
+            elif self.velocity.x < 0:
+                self.rect.left = collision.rect.right
+            self.velocity.x = 0
+
+        # Handle vertical movement separately
+        self.rect.y += self.velocity.y
+        collision = pygame.sprite.spritecollideany(self, sprite_group)
+        if collision:
+            if self.velocity.y > 0:
+                self.rect.bottom = collision.rect.top
+            elif self.velocity.y < 0:
+                self.rect.top = collision.rect.bottom
+            self.velocity.y = 0
+
+
+    def move_and_collide(self, screen: pygame.Surface, controller: Controller, collision_group: pygame.sprite.Group):
+
+        self.check_collisions(collision_group)
         self.rect.topleft += self.velocity
         if self.rect.x < 0:
             self.rect.x = screen.get_width() - SPRITE_SIZE[0]

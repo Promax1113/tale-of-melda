@@ -12,7 +12,7 @@ controller = game.Controller("0")
 
 ll = game.LevelLoader("game_data/maps")
 
-pl = game.Player((2*64, 2*64))
+pl = game.Player((7*64, 2*64))
 
 pl.speed = 5
 
@@ -42,7 +42,7 @@ while running:
     keys = pygame.key.get_pressed()
 
     pl.get_input(keys)
-    pl.move_and_collide(screen, controller)
+    pl.move_and_collide(screen, controller, objs)
     pl.draw(screen)
     screen.blit(id_text, (20, 20))
     pygame.display.flip()
