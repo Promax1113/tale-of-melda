@@ -1,6 +1,8 @@
 import math
 import pygame
 from os import getcwd
+from .game_controller import Controller
+
 
 SPRITE_SIZE = (48,48)
 
@@ -10,7 +12,7 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, pos: tuple) -> None:
         super().__init__()
-        
+
         global SPRITE_SIZE
 
         self.img = pygame.image.load(f"{getcwd()}/game_data/sprites/player/player.png")
@@ -21,13 +23,48 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.img.get_rect()
         self.rect.x, self.rect.y = pos
 
+        self.last_room_id = "0"
+
         self.velocity = pygame.Vector2()
         self.speed = 10
 
-    def move_and_collide(self):
+    def move_and_collide(self, screen: pygame.Surface, controller: Controller):
         self.rect.topleft += self.velocity
+        if self.rect.x < 0:
+            self.rect.x = screen.get_width() - SPRITE_SIZE[0]
+            if controller.screen_id[-1] == "4":
+                controller.screen_id = self.last_room_id
+            else:
+                self.last_room_id = controller.screen_id
+                controller.screen_id += "2"
+
+        elif self.rect.x > screen.get_width() - SPRITE_SIZE[0]:
+            self.rect.x = 0
+            if controller.screen_id[-1] == "2":
+                controller.screen_id = self.last_room_id
+            else:
+                self.last_room_id = controller.screen_id
+                controller.screen_id += "4"
+
+        elif self.rect.y < 0:
+            self.rect.y = screen.get_height() - SPRITE_SIZE[1]
+            if controller.screen_id[-1] == "3":
+                controller.screen_id = self.last_room_id
+            else:
+                self.last_room_id = controller.screen_id
+                controller.screen_id += "1"
+        elif self.rect.y > screen.get_height() - SPRITE_SIZE[1]:
+            self.rect.y = 0
+            if controller.screen_id[-1] == "1":
+                controller.screen_id = self.last_room_id
+            else:
+                self.last_room_id = controller.screen_id
+                controller.screen_id += "3"
+
+
+
         self.velocity = pygame.math.Vector2(0,0)
-        
+
     def get_input(self, keys):
 
         if keys[pygame.K_UP]:

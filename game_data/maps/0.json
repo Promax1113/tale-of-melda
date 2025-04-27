@@ -1,3 +1,18 @@
 {
-  "obstacles": [{ "x": 3, "y": 3, "width": 1, "height": 1, "type": "wall" }]
+  "obstacles": [
+    {
+      "x": 3,
+      "y": 3,
+      "width": 5,
+      "height": 1,
+      "type": "wall"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "width": 1,
+      "height": 5,
+      "type": "spikes"
+    }
+  ]
 }
