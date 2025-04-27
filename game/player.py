@@ -34,6 +34,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.x = screen.get_width() - SPRITE_SIZE[0]
             if controller.screen_id[-1] == "4":
                 controller.screen_id = self.last_room_id
+                #removes the last value in last id so it now can return back.
+                self.last_room_id = self.last_room_id[:-1]
             else:
                 self.last_room_id = controller.screen_id
                 controller.screen_id += "2"
@@ -42,6 +44,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.x = 0
             if controller.screen_id[-1] == "2":
                 controller.screen_id = self.last_room_id
+                self.last_room_id = self.last_room_id[:-1]
+
             else:
                 self.last_room_id = controller.screen_id
                 controller.screen_id += "4"
@@ -50,6 +54,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.y = screen.get_height() - SPRITE_SIZE[1]
             if controller.screen_id[-1] == "3":
                 controller.screen_id = self.last_room_id
+                self.last_room_id = self.last_room_id[:-1]
+
             else:
                 self.last_room_id = controller.screen_id
                 controller.screen_id += "1"
@@ -57,6 +63,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.y = 0
             if controller.screen_id[-1] == "1":
                 controller.screen_id = self.last_room_id
+                self.last_room_id = self.last_room_id[:-1]
+
             else:
                 self.last_room_id = controller.screen_id
                 controller.screen_id += "3"
