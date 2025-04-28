@@ -21,6 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.img_angle = 0
 
         self.rect = self.img.get_rect()
+        
         self.rect.x, self.rect.y = pos
 
         self.last_room_id = "0"
