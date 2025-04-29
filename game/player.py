@@ -30,7 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.speed = 10
 
     def check_collisions(self, sprite_group: pygame.sprite.Group):
-        # Handle horizontal movement first
+        # add horizontal movement first
         self.rect.x += self.velocity.x
         collision = pygame.sprite.spritecollideany(self, sprite_group)
         if collision:
@@ -40,7 +40,7 @@ class Player(pygame.sprite.Sprite):
                 self.rect.left = collision.rect.right
             self.velocity.x = 0
 
-        # Handle vertical movement separately
+        # add vertical movement separately
         self.rect.y += self.velocity.y
         collision = pygame.sprite.spritecollideany(self, sprite_group)
         if collision:
@@ -57,42 +57,46 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft += self.velocity
         if self.rect.x < 0:
             self.rect.x = screen.get_width() - SPRITE_SIZE[0]
-            if controller.screen_id[-1] == "4":
-                controller.screen_id = self.last_room_id
-                #removes the last value in last id so it now can return back.
-                self.last_room_id = self.last_room_id[:-1]
-            else:
-                self.last_room_id = controller.screen_id
-                controller.screen_id += "2"
+            controller.room.x -= 1
+            # if controller.screen_id[-1] == "4":
+            #     controller.screen_id = self.last_room_id
+            #     #removes the last value in last id so it now can return back.
+            #     self.last_room_id = self.last_room_id[:-1]
+            # else:
+            #     self.last_room_id = controller.screen_id
+            #     controller.screen_id += "2"
 
         elif self.rect.x > screen.get_width() - SPRITE_SIZE[0]:
             self.rect.x = 0
-            if controller.screen_id[-1] == "2":
-                controller.screen_id = self.last_room_id
-                self.last_room_id = self.last_room_id[:-1]
+            controller.room.x += 1
+            # if controller.screen_id[-1] == "2":
+            #     controller.screen_id = self.last_room_id
+            #     self.last_room_id = self.last_room_id[:-1]
 
-            else:
-                self.last_room_id = controller.screen_id
-                controller.screen_id += "4"
+            # else:
+            #     self.last_room_id = controller.screen_id
+            #     controller.screen_id += "4"
 
         elif self.rect.y < 0:
             self.rect.y = screen.get_height() - SPRITE_SIZE[1]
-            if controller.screen_id[-1] == "3":
-                controller.screen_id = self.last_room_id
-                self.last_room_id = self.last_room_id[:-1]
+            controller.room.y += 1
+            # if controller.screen_id[-1] == "3":
+            #     controller.screen_id = self.last_room_id
+            #     self.last_room_id = self.last_room_id[:-1]
 
-            else:
-                self.last_room_id = controller.screen_id
-                controller.screen_id += "1"
+            # else:
+            #     self.last_room_id = controller.screen_id
+            #     controller.screen_id += "1"
         elif self.rect.y > screen.get_height() - SPRITE_SIZE[1]:
             self.rect.y = 0
-            if controller.screen_id[-1] == "1":
-                controller.screen_id = self.last_room_id
-                self.last_room_id = self.last_room_id[:-1]
+            controller.room.y -= 1
+            # if controller.screen_id[-1] == "1":
+            #     controller.screen_id = self.last_room_id
+            #     self.last_room_id = self.last_room_id[:-1]
 
-            else:
-                self.last_room_id = controller.screen_id
-                controller.screen_id += "3"
+            # else:
+            #     self.last_room_id = controller.screen_id
+            #     controller.screen_id += "3"
 
 
 

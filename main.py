@@ -8,11 +8,11 @@ running = True
 # game setup
 
 screen = pygame.display.set_mode((800, 600))
-controller = game.Controller("0")
+controller = game.Controller()
 
 ll = game.LevelLoader("game_data/maps")
 
-pl = game.Player((7*64, 2*64))
+pl = game.Player((6*64, 5*64))
 
 pl.speed = 5
 
@@ -20,17 +20,19 @@ font = pygame.font.Font("game_data/fonts/Pixeled.ttf", 24)
 
 
 clock = pygame.time.Clock()
-last_id = -1
+
 
 while running:
     screen.fill((12,12,12))
-    id_text = font.render(f"Room: {controller.screen_id}", False, (24,24,24,))
+    id_text = font.render(f"Room: ({controller.room.x}, {controller.room.y})", False, (24,24,24,))
+    if controller.last_room.coords() != controller.room.coords():
+        controller.last_room.x, controller.last_room.y = controller.room.coords()
 
-    if last_id != controller.screen_id:
-        map = ll.load(controller.screen_id)
-        last_id = controller.screen_id
-        bg = ll.load_background(controller.screen_id)
+        map = ll.load(controller.room)
+
+        bg = ll.load_background(controller.room)
         objs = ll.place_objects(map)
+
     screen.blit(bg, (0,0))
 
     for obj in objs:
@@ -44,6 +46,7 @@ while running:
     pl.get_input(keys)
     pl.move_and_collide(screen, controller, objs)
     pl.draw(screen)
-    screen.blit(id_text, (20, 20))
+    screen.blit(id_text, (20, 500))
+
     pygame.display.flip()
     clock.tick(60)

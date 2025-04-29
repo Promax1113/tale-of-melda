@@ -10,9 +10,12 @@ class LevelLoader:
         self.path = path
 
     def load(self, level_id):
-        with open(f"{getcwd()}/{self.path}/{level_id}.json") as f:
+        print(f"{getcwd()}/{self.path}/{level_id.x}_{level_id.y}.json")
+        with open(f"{getcwd()}/{self.path}/{level_id.x}_{level_id.y}.json") as f:
             level_data = json.load(f)
-        return level_data
+            return level_data
+
+
 
     def place_objects(self, data: dict):
 
@@ -38,6 +41,6 @@ class LevelLoader:
 
     @staticmethod
     def load_background(level_id):
-        return pygame.image.load(
-            f"{getcwd()}/game_data/sprites/backgrounds/{level_id}.png"
-        )
+            return pygame.image.load(
+                f"{getcwd()}/game_data/sprites/backgrounds/{level_id.x}_{level_id.y}.png"
+            )
