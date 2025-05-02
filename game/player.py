@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.img_angle = 0
 
         self.rect = self.img.get_rect()
-        
+
         self.rect.x, self.rect.y = pos
 
         self.last_room_id = "0"
@@ -55,6 +55,7 @@ class Player(pygame.sprite.Sprite):
 
         self.check_collisions(collision_group)
         self.rect.topleft += self.velocity
+
         if self.rect.x < 0:
             self.rect.x = screen.get_width() - SPRITE_SIZE[0]
             controller.room.x -= 1
@@ -112,6 +113,9 @@ class Player(pygame.sprite.Sprite):
             self.velocity.x = self.speed * -1
         elif keys[pygame.K_RIGHT]:
             self.velocity.x = self.speed * 1
+
+    def shoot(self):
+        pass
 
     def draw(self, screen: pygame.Surface):
         screen.blit(self.img, self.rect)

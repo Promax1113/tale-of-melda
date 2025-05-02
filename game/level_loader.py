@@ -23,7 +23,7 @@ class LevelLoader:
 
         for obstacle in data["obstacles"]:
             if obstacle["width"] > 1 or obstacle["height"] > 1:
-                for i in range(0, obstacle["width"] + 1):
+                for i in range(1, obstacle["width"] + 1):
                     for j in range(0, obstacle["height"]):
                         obstacles.add(
                             Block(

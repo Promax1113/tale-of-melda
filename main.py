@@ -36,17 +36,27 @@ while running:
     screen.blit(bg, (0,0))
 
     for obj in objs:
+        if controller.debug:
+            pygame.draw.rect(screen, (255,255,255), obj.rect)
         obj.draw_to_screen(screen)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+            elif event.key == pygame.K_q:
+                controller.debug = not controller.debug
 
     keys = pygame.key.get_pressed()
 
     pl.get_input(keys)
     pl.move_and_collide(screen, controller, objs)
     pl.draw(screen)
-    screen.blit(id_text, (20, 500))
+    if controller.debug:
+        pygame.draw.rect(screen, (255,0,0), pl.rect)
+        screen.blit(id_text, (20, 500))
+
 
     pygame.display.flip()
     clock.tick(60)
