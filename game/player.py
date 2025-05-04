@@ -1,8 +1,13 @@
 import math
 import pygame
 from os import getcwd
+
+from game.bullet import Bullet
 from .game_controller import Controller
 
+# In direction code:
+# Every number represents a side of the current screen,
+# up is 1, left is 2, and so on.
 
 SPRITE_SIZE = (48,48)
 
@@ -28,6 +33,7 @@ class Player(pygame.sprite.Sprite):
 
         self.velocity = pygame.Vector2()
         self.speed = 10
+        self.direction = 3
 
     def check_collisions(self, sprite_group: pygame.sprite.Group):
         # add horizontal movement first
@@ -102,17 +108,26 @@ class Player(pygame.sprite.Sprite):
 
 
         self.velocity = pygame.math.Vector2(0,0)
+    def spawn_bullet(self, controller: Controller, screen: pygame.Surface):
+        bl = Bullet(self)
+        controller.projectile_list.append(bl)
 
-    def get_input(self, keys):
+    def get_input(self, keys, controller, screen):
 
         if keys[pygame.K_UP]:
             self.velocity.y = self.speed * -1
+            self.direction = 1
         elif keys[pygame.K_DOWN]:
             self.velocity.y = self.speed * 1
+            self.direction = 3
         elif keys[pygame.K_LEFT]:
             self.velocity.x = self.speed * -1
+            self.direction = 2
         elif keys[pygame.K_RIGHT]:
             self.velocity.x = self.speed * 1
+            self.direction = 4
+        if keys[pygame.K_z]:
+            self.spawn_bullet(controller, screen)
 
     def shoot(self):
         pass

@@ -4,7 +4,7 @@ class Controller:
         self.last_room = Room((-1, -1))
         self.debug = False
 
-
+        self.projectile_list = []
 
 class Room:
     def __init__(self, coords: tuple):

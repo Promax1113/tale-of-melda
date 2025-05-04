@@ -50,7 +50,7 @@ while running:
 
     keys = pygame.key.get_pressed()
 
-    pl.get_input(keys)
+    pl.get_input(keys, controller, screen)
     pl.move_and_collide(screen, controller, objs)
     pl.draw(screen)
     if controller.debug:
