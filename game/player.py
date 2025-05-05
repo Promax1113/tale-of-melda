@@ -27,13 +27,16 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.img.get_rect()
 
+
         self.rect.x, self.rect.y = pos
 
-        self.last_room_id = "0"
 
         self.velocity = pygame.Vector2()
         self.speed = 10
         self.direction = 3
+
+        self.last_bullet_time = 0
+        self.bullet_cooldown = 300
 
     def check_collisions(self, sprite_group: pygame.sprite.Group):
         # add horizontal movement first
@@ -110,10 +113,10 @@ class Player(pygame.sprite.Sprite):
         self.velocity = pygame.math.Vector2(0,0)
     def spawn_bullet(self, controller: Controller, screen: pygame.Surface):
         bl = Bullet(self)
-        controller.projectile_list.append(bl)
+        controller.projectile_list.add(bl)
 
     def get_input(self, keys, controller, screen):
-
+        current_time = pygame.time.get_ticks()
         if keys[pygame.K_UP]:
             self.velocity.y = self.speed * -1
             self.direction = 1
@@ -126,8 +129,12 @@ class Player(pygame.sprite.Sprite):
         elif keys[pygame.K_RIGHT]:
             self.velocity.x = self.speed * 1
             self.direction = 4
-        if keys[pygame.K_z]:
+
+        # This checks for if the subtraction of current time (epoch) and the last bullet time (also epoch)
+        # is less than the time established as cooldown.
+        if keys[pygame.K_z] and current_time - self.last_bullet_time > self.bullet_cooldown:
             self.spawn_bullet(controller, screen)
+            self.last_bullet_time =  current_time
 
     def shoot(self):
         pass

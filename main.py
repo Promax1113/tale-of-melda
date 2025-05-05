@@ -32,6 +32,8 @@ while running:
 
         bg = ll.load_background(controller.room)
         objs = ll.place_objects(map)
+        controller.obstacle_list = objs
+
 
     screen.blit(bg, (0,0))
 
@@ -53,6 +55,8 @@ while running:
     pl.get_input(keys, controller, screen)
     pl.move_and_collide(screen, controller, objs)
     pl.draw(screen)
+    for projectile in controller.projectile_list:
+        projectile.draw_and_move(controller, screen)
     if controller.debug:
         pygame.draw.rect(screen, (255,0,0), pl.rect)
         screen.blit(id_text, (20, 500))
