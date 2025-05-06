@@ -2,6 +2,7 @@ import json
 from os import getcwd
 import pygame
 from .block import Block
+from .interactable import Interactable
 
 
 class LevelLoader:
@@ -9,19 +10,23 @@ class LevelLoader:
         super().__init__()
         self.path = path
 
-    def load(self, level_id):
+    def load(self, level_id) -> dict:
         print(f"{getcwd()}/{self.path}/{level_id.x}_{level_id.y}.json")
         with open(f"{getcwd()}/{self.path}/{level_id.x}_{level_id.y}.json") as f:
             level_data = json.load(f)
             return level_data
 
+    def place_interactables(self, data: dict):
+        objects = pygame.sprite.Group()
+        for object in data:
+            objects.add(Interactable(object["type"], (object["x"] * 48, object["y"] * 48), object["contents"]))
+        return objects
 
-
-    def place_objects(self, data: dict):
+    def place_obstacles(self, data: dict):
 
         obstacles = pygame.sprite.Group()
 
-        for obstacle in data["obstacles"]:
+        for obstacle in data:
             if obstacle["width"] > 1 or obstacle["height"] > 1:
                 for i in range(1, obstacle["width"] + 1):
                     for j in range(0, obstacle["height"]):

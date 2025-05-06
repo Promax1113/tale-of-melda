@@ -7,8 +7,12 @@ class Controller:
         self.last_room = Room((-1, -1))
         self.debug = False
 
+        self.habilities = {"shoot": False, "sword": False}
+
+
         self.projectile_list = pygame.sprite.Group()
         self.obstacle_list = pygame.sprite.Group()
+        self.scene_interactables = pygame.sprite.Group()
 
 class Room:
     def __init__(self, coords: tuple):

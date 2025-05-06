@@ -12,7 +12,7 @@ controller = game.Controller()
 
 ll = game.LevelLoader("game_data/maps")
 
-pl = game.Player((6*64, 5*64))
+pl = game.Player((6*64, 5*64), id=0)
 
 pl.speed = 5
 
@@ -31,16 +31,22 @@ while running:
         map = ll.load(controller.room)
 
         bg = ll.load_background(controller.room)
-        objs = ll.place_objects(map)
-        controller.obstacle_list = objs
+        interactables = ll.place_interactables(map["interactables"])
+        controller.scene_interactables = interactables
+
+        obstacles = ll.place_obstacles(map["obstacles"])
+        controller.obstacle_list = obstacles
 
 
     screen.blit(bg, (0,0))
 
-    for obj in objs:
+    for obj in obstacles:
         if controller.debug:
             pygame.draw.rect(screen, (255,255,255), obj.rect)
         obj.draw_to_screen(screen)
+    for obj in interactables:
+        obj.draw_to_screen_idle(screen)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -53,7 +59,7 @@ while running:
     keys = pygame.key.get_pressed()
 
     pl.get_input(keys, controller, screen)
-    pl.move_and_collide(screen, controller, objs)
+    pl.move_and_collide(screen, controller, obstacles)
     pl.draw(screen)
     for projectile in controller.projectile_list:
         projectile.draw_and_move(controller, screen)

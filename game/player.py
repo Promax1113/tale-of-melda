@@ -15,12 +15,13 @@ SPRITE_SIZE = (48,48)
 class Player(pygame.sprite.Sprite):
 
 
-    def __init__(self, pos: tuple) -> None:
+    def __init__(self, pos: tuple, id: int) -> None:
         super().__init__()
 
         global SPRITE_SIZE
 
-        self.img = pygame.image.load(f"{getcwd()}/game_data/sprites/player/player.png")
+
+        self.img = pygame.image.load(f"{getcwd()}/game_data/sprites/player/player{id}.png")
         self.img = pygame.transform.scale(self.img, SPRITE_SIZE)
 
         self.img_angle = 0
@@ -132,12 +133,10 @@ class Player(pygame.sprite.Sprite):
 
         # This checks for if the subtraction of current time (epoch) and the last bullet time (also epoch)
         # is less than the time established as cooldown.
-        if keys[pygame.K_z] and current_time - self.last_bullet_time > self.bullet_cooldown:
-            self.spawn_bullet(controller, screen)
-            self.last_bullet_time =  current_time
-
-    def shoot(self):
-        pass
+        if controller.habilities["shoot"]:
+            if keys[pygame.K_z] and current_time - self.last_bullet_time > self.bullet_cooldown:
+                self.spawn_bullet(controller, screen)
+                self.last_bullet_time =  current_time
 
     def draw(self, screen: pygame.Surface):
         screen.blit(self.img, self.rect)
