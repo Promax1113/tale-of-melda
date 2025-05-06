@@ -2,7 +2,7 @@ import json
 from os import getcwd
 import pygame
 from .block import Block
-from .interactable import Interactable
+from .interactable import Chest, Interactable
 
 
 class LevelLoader:
@@ -19,7 +19,11 @@ class LevelLoader:
     def place_interactables(self, data: dict):
         objects = pygame.sprite.Group()
         for object in data:
-            objects.add(Interactable(object["type"], (object["x"] * 48, object["y"] * 48), object["contents"]))
+            if object["type"] == "chest":
+                objects.add(Chest(object["type"], (object["x"] * 48, object["y"] * 48), object["contents"], object["trap"]))
+            else:
+                objects.add(Interactable(object["type"], (object["x"] * 48, object["y"] * 48), object["contents"]))
+
         return objects
 
     def place_obstacles(self, data: dict):

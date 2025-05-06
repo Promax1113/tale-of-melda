@@ -76,7 +76,7 @@
       "x": 5,
       "y": 5,
       "type": "chest",
-      "opened": false,
+      "trap": false,
       "contents": ["wand"]
     }
   ]

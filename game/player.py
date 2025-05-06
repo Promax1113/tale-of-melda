@@ -28,6 +28,7 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.img.get_rect()
 
+        self.interact_rect = pygame.rect.Rect(pos[0]-48, pos[1] - 48, 144, 144)
 
         self.rect.x, self.rect.y = pos
 
@@ -65,6 +66,8 @@ class Player(pygame.sprite.Sprite):
 
         self.check_collisions(collision_group)
         self.rect.topleft += self.velocity
+        self.interact_rect.x = self.rect.x - 48
+        self.interact_rect.y = self.rect.y - 48
 
         if self.rect.x < 0:
             self.rect.x = screen.get_width() - SPRITE_SIZE[0]

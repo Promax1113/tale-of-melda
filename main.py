@@ -64,7 +64,9 @@ while running:
     for projectile in controller.projectile_list:
         projectile.draw_and_move(controller, screen)
     if controller.debug:
+        pygame.draw.rect(screen, (0,0,255), pl.interact_rect)
         pygame.draw.rect(screen, (255,0,0), pl.rect)
+
         screen.blit(id_text, (20, 500))
 
 
