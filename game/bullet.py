@@ -13,7 +13,7 @@ class Bullet(pygame.sprite.Sprite):
 
         # box.png is a placeholder
         self.img = pygame.image.load(f"{os.getcwd()}/game_data/sprites/player/projectile.png")
-        self.img = pygame.transform.scale(self.img, (48, 48))
+        self.img = pygame.transform.scale(self.img, (32, 32))
         self.rect = self.img.get_rect()
         self.rect.center = self.author.rect.center
         self.direction = self.author.direction
