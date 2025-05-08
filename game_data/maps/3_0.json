@@ -87,7 +87,7 @@
       "width": 1,
       "type": "chest",
       "trap": false,
-      "contents": ["shoot"]
+      "contents": ["shooting"]
     }
   ]
 }

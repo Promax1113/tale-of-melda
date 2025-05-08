@@ -29,7 +29,7 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.img.get_rect()
 
-        self.interact_rect = pygame.rect.Rect(pos[0] - SPRITE_SIZE[0] , pos[1] - SPRITE_SIZE[1], 144, 144)
+        self.interact_rect = pygame.rect.Rect(pos[0] + 24, pos[1] + 24, 96, 96)
 
         self.rect.x, self.rect.y = pos
 
@@ -70,8 +70,8 @@ class Player(pygame.sprite.Sprite):
 
         self.check_collisions(collision_group)
         self.rect.topleft += self.velocity
-        self.interact_rect.x = self.rect.x - 48
-        self.interact_rect.y = self.rect.y - 48
+        self.interact_rect.x = self.rect.x - 24
+        self.interact_rect.y = self.rect.y - 24
 
         if self.rect.x < 0:
             self.rect.x = screen.get_width() - SPRITE_SIZE[0]
@@ -129,6 +129,8 @@ class Player(pygame.sprite.Sprite):
                 if isinstance(obj, Chest):
                     obj.start_animation(controller)
                     controller.set_habilities(obj.contents[0], True)
+                    controller.status_text_start_time = pygame.time.get_ticks()
+                    controller.status_text = f"{obj.contents[0]} unlocked, try pessing Z!"
 
 
 
@@ -149,7 +151,7 @@ class Player(pygame.sprite.Sprite):
 
         # This checks for if the subtraction of current time (epoch) and the last bullet time (also epoch)
         # is less than the time established as cooldown.
-        if controller.habilities["shoot"]:
+        if controller.habilities["shooting"]:
             if keys[pygame.K_z] and current_time - self.last_bullet_time > self.bullet_cooldown:
                 self.spawn_bullet(controller, screen)
                 self.last_bullet_time =  current_time

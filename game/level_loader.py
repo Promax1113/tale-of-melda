@@ -20,9 +20,25 @@ class LevelLoader:
         objects = pygame.sprite.Group()
         for object in data:
             if object["type"] == "chest":
-                objects.add(Chest(controller, object["type"], (object["x"] * 48, object["y"] * 48), object["contents"], object["trap"], object["id"]))
+                objects.add(
+                    Chest(
+                        controller,
+                        object["type"],
+                        (object["x"] * 48, object["y"] * 48),
+                        object["contents"],
+                        object["trap"],
+                        object["id"],
+                    )
+                )
             else:
-                objects.add(Interactable(object["type"], (object["x"] * 48, object["y"] * 48), object["contents"], object["id"]))
+                objects.add(
+                    Interactable(
+                        object["type"],
+                        (object["x"] * 48, object["y"] * 48),
+                        object["contents"],
+                        object["id"],
+                    )
+                )
 
         return objects
 
@@ -44,12 +60,14 @@ class LevelLoader:
                             )
                         )
             else:
-                obstacles.add(Block(obstacle["type"], (obstacle["x"]*48, obstacle["y"]*48)))
+                obstacles.add(
+                    Block(obstacle["type"], (obstacle["x"] * 48, obstacle["y"] * 48))
+                )
 
         return obstacles
 
     @staticmethod
     def load_background(level_id):
-            return pygame.image.load(
-                f"{getcwd()}/game_data/sprites/backgrounds/{level_id.x}_{level_id.y}.png"
-            )
+        return pygame.image.load(
+            f"{getcwd()}/game_data/sprites/backgrounds/{level_id.x}_{level_id.y}.png"
+        )
