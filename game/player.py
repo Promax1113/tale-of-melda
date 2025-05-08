@@ -128,9 +128,10 @@ class Player(pygame.sprite.Sprite):
             if self.interact_rect.colliderect(obj.rect):
                 if isinstance(obj, Chest):
                     obj.start_animation(controller)
-                    controller.set_habilities(obj.contents[0], True)
-                    controller.status_text_start_time = pygame.time.get_ticks()
-                    controller.status_text = f"{obj.contents[0]} unlocked, try pessing Z!"
+                    if obj.contents[0] == "shooting":
+                        controller.set_habilities(obj.contents[0], True)
+                        controller.status_text_start_time = pygame.time.get_ticks()
+                        controller.status_text = f"{obj.contents[0]} unlocked, try pessing Z!"
 
 
 
