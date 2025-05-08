@@ -80,13 +80,14 @@
   ],
   "interactables": [
     {
+      "id": 0,
       "x": 5,
       "y": 5,
       "height": 1,
       "width": 1,
       "type": "chest",
       "trap": false,
-      "contents": ["wand"]
+      "contents": ["shoot"]
     }
   ]
 }

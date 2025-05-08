@@ -123,13 +123,12 @@ class Player(pygame.sprite.Sprite):
         bl = Bullet(self)
         controller.projectile_list.add(bl)
 
-    def interact(self, screen: pygame.Surface, controller: Controller):
+    def interact(self, controller: Controller):
         for obj in controller.scene_interactables:
             if self.interact_rect.colliderect(obj.rect):
                 if isinstance(obj, Chest):
-                    obj.animate_opening()
-                    if "wand" in obj.contents:
-                        controller.set_habilities("shoot", True)
+                    obj.start_animation(controller)
+                    controller.set_habilities(obj.contents[0], True)
 
 
 
@@ -154,8 +153,8 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_z] and current_time - self.last_bullet_time > self.bullet_cooldown:
                 self.spawn_bullet(controller, screen)
                 self.last_bullet_time =  current_time
-        if keys[pygame.K_x] and current_time - self.last_interact_time > self.interact_timeout:
-            self.interact(screen, controller)
+        if keys[pygame.K_x]:
+            self.interact(controller)
 
     def draw(self, screen: pygame.Surface):
         screen.blit(self.img, self.rect)

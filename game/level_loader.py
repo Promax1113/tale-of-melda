@@ -11,18 +11,18 @@ class LevelLoader:
         self.path = path
 
     def load(self, level_id) -> dict:
-        print(f"{getcwd()}/{self.path}/{level_id.x}_{level_id.y}.json")
+        # print(f"{getcwd()}/{self.path}/{level_id.x}_{level_id.y}.json")
         with open(f"{getcwd()}/{self.path}/{level_id.x}_{level_id.y}.json") as f:
             level_data = json.load(f)
             return level_data
 
-    def place_interactables(self, data: dict):
+    def place_interactables(self, data: dict, controller):
         objects = pygame.sprite.Group()
         for object in data:
             if object["type"] == "chest":
-                objects.add(Chest(object["type"], (object["x"] * 48, object["y"] * 48), object["contents"], object["trap"]))
+                objects.add(Chest(controller, object["type"], (object["x"] * 48, object["y"] * 48), object["contents"], object["trap"], object["id"]))
             else:
-                objects.add(Interactable(object["type"], (object["x"] * 48, object["y"] * 48), object["contents"]))
+                objects.add(Interactable(object["type"], (object["x"] * 48, object["y"] * 48), object["contents"], object["id"]))
 
         return objects
 

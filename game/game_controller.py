@@ -13,8 +13,8 @@ class Controller:
         self.projectile_list = pygame.sprite.Group()
         self.obstacle_list = pygame.sprite.Group()
         self.scene_interactables = pygame.sprite.Group()
+        self.opened_chests = []
 
-        
     def set_habilities(self, name, value):
         self.habilities[name] = value
         

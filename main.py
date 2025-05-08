@@ -31,7 +31,7 @@ while running:
         map = ll.load(controller.room)
 
         bg = ll.load_background(controller.room)
-        interactables = ll.place_interactables(map["interactables"])
+        interactables = ll.place_interactables(map["interactables"], controller)
         controller.scene_interactables = interactables
 
         obstacles = ll.place_obstacles(map["obstacles"])
@@ -45,6 +45,7 @@ while running:
             pygame.draw.rect(screen, (255,255,255), obj.rect)
         obj.draw_to_screen(screen)
     for obj in interactables:
+        obj.update()
         obj.draw_to_screen(screen)
 
     for event in pygame.event.get():

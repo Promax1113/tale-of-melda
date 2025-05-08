@@ -69,15 +69,24 @@
       "height": 1,
       "width": 2,
       "type": "wall"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "type": "wall",
+      "height": 1,
+      "width": 1
+
     }
   ],
   "interactables": [
     {
+      "id": 1,
       "x": 5,
       "y": 5,
       "type": "chest",
-      "trap": false,
-      "contents": ["wand"]
+      "trap": true,
+      "contents": ["none"]
     }
   ]
 }
