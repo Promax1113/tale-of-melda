@@ -45,7 +45,7 @@ while running:
             pygame.draw.rect(screen, (255,255,255), obj.rect)
         obj.draw_to_screen(screen)
     for obj in interactables:
-        obj.draw_to_screen_idle(screen)
+        obj.draw_to_screen(screen)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

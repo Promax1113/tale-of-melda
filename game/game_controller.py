@@ -14,6 +14,10 @@ class Controller:
         self.obstacle_list = pygame.sprite.Group()
         self.scene_interactables = pygame.sprite.Group()
 
+        
+    def set_habilities(self, name, value):
+        self.habilities[name] = value
+        
 class Room:
     def __init__(self, coords: tuple):
         self.x , self.y = coords
