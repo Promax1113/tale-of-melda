@@ -69,7 +69,6 @@ class Player(pygame.sprite.Sprite):
     def move_and_collide(self, screen: pygame.Surface, controller: Controller, collision_group: pygame.sprite.Group):
 
         self.check_collisions(collision_group)
-        self.rect.topleft += self.velocity
         self.interact_rect.x = self.rect.x - 24
         self.interact_rect.y = self.rect.y - 24
 
@@ -126,7 +125,7 @@ class Player(pygame.sprite.Sprite):
     def interact(self, controller: Controller):
         for obj in controller.scene_interactables:
             if self.interact_rect.colliderect(obj.rect):
-                if isinstance(obj, Chest):
+                if isinstance(obj, Chest) and not obj.id in controller.opened_chests:
                     obj.start_animation(controller)
                     if obj.contents[0] == "shooting":
                         controller.set_habilities(obj.contents[0], True)

@@ -175,3 +175,4 @@ cython_debug/
 
 # Player Data
 game_data/player_data/
+setup.sh

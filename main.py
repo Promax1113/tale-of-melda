@@ -15,7 +15,7 @@ ll = game.LevelLoader("game_data/maps")
 
 pl = game.Player((6*64, 5*64), id=0)
 
-pl.speed = 5
+pl.speed = 10
 
 font = pygame.font.Font("game_data/fonts/Pixeled.ttf", 24)
 

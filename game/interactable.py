@@ -47,11 +47,15 @@ class Chest(Interactable):
         self.trap = trap
 
         if self.id in controller.opened_chests:
-            self.is_animating = False
-            self.img = self.sprite_list[str(len(self.sprite_list) - 2)]
-            return
+                self.is_animating = False
+                if self.trap:
+                    self.img = self.sprite_list[str(len(self.sprite_list) - 1)]
+                else:
+                    self.img = self.sprite_list[str(len(self.sprite_list) - 2)]
+                return
 
     def start_animation(self, controller):
+
 
         if not self.opened and not self.is_animating:
 
@@ -60,9 +64,10 @@ class Chest(Interactable):
             self.current_time = 0
             if self.id in controller.opened_chests:
                 self.is_animating = False
-                self.img = self.sprite_list[str(len(self.sprite_list) - 2)]
                 return
+            
             controller.opened_chests.append(self.id)
+            self.opened = True
 
     def update(self):
         if self.is_animating:
